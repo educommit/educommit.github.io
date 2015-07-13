@@ -320,69 +320,24 @@ function editbio()
   user.set("classes",bio);
 }
 
-function locate() {
-    // IMPORTANT: Fill in your client key
-    var clientKey = "js-hP9EKHB7uh5LmiRRg1ovqVEGwpyIxwlPlut5b5dGmjsJBkASlZoLU2srr09ZwvPS";
-    
-    var cache = {};
-    var container = $("#example2");
-    var errorDiv = container.find("div.text-error");
-    
-    /** Handle successful response */
-    function handleResp(data)
+function locate()
+{
+  var origin2 = "28105";
+  var destinationA = "28270";
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix(
     {
-      // Check for error
-      if (data.error_msg)
-        alert(data.error_msg);
-      else if ("distance" in data)
-      {
-        // Show div
-        container.find("div.distance").show()
-        // Set distance
-        .find("span.distance").text(data.distance + " miles");
-      }
-    }
-    // Get zip code
-      var zipcode1 = prompt("Please enter zip code 1").substring(0, 5);
-      var zipcode2 = prompt("Please enter zip code 2").substring(0, 5);
-      if (zipcode1.length == 5 && /^[0-9]+$/.test(zipcode1) && zipcode2.length == 5 && /^[0-9]+$/.test(zipcode2))
-      {
-        // Clear error
-        errorDiv.empty();
-        
-        // Check cache
-        var cacheKey = zipcode1 + '-' + zipcode2;
-        if (cacheKey in cache)
-        {
-          handleResp(cache[cacheKey]);
-        }
-        else
-        {
-          // Build url
-          var url = "https://www.zipcodeapi.com/rest/"+clientKey+"/distance.json/" + zipcode1 + "/" + zipcode2 + "/mile";
-          
-          // Make AJAX request
-          $.ajax({
-            "url": url,
-            "dataType": "json"
-          }).done(function(data) {
-            handleResp(data);
-            
-            // Store in cache
-            cache[cacheKey] = data;
-          }).fail(function(data) {
-            if (data.responseText && (json = $.parseJSON(data.responseText)))
-            {
-              // Store in cache
-              cache[cacheKey] = json;
-              
-              // Check for error
-              if (json.error_msg)
-                alert(json.error_msg);
-            }
-            else
-              alert('Request failed.');
-          });
-        }
-      }
-  }
+    origins: [origin2],
+    destinations: [destinationA],
+    travelMode: google.maps.TravelMode.DRIVING,
+    transitOptions: TransitOptions,
+    unitSystem: UnitSystem,
+    durationInTraffic: Boolean,
+    avoidHighways: Boolean,
+    avoidTolls: Boolean,
+  }, callback);
+}
+
+function callback(response, status) {
+  alert('swag')
+}
