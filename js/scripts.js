@@ -140,7 +140,7 @@ function userdata() {
   document.getElementById("profpicbg").style.backgroundSize = "cover";
   $("#phone").append(user.get('phone'));
   $("#email").append(user.get('email'));
-  $("#address").append(user.get('street') + ", " + user.get('city') + ", " + user.get('state') + ", " + user.get('zip'))
+  $("#address").append(user.get('city') + ", " + user.get('state'))
   $("#featurestext").append(user.get('classes'));
   $(".infodiv").append("");
   $("#education").append(user.get('education'));
@@ -150,10 +150,16 @@ function userdata() {
   query.find({
     success: function (results) {
       // Do something with the returned Parse.Object values
+      var people = [];
+      var users = [];
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get('Mentor') != user.get('Mentor')) {
-          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
+          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="'+i+'"></span> in '+object.get('city')+', '+object.get('state')+'</p></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
+          people = object.get('zip');
+          users = user.get('zip');
+          console.log(distance(people, users, i));
+          distance(people, users, i);
         }
       }
     },
@@ -198,9 +204,13 @@ function data() {
   }
   var users = Parse.Object.extend('_User');
   var query = new Parse.Query(users);
+  var user = Parse.User.current();
   query.find({
     success: function (results) {
       // Do something with the returned Parse.Object values
+      var people;
+      var users;
+      var n;
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.id == id) {
@@ -211,13 +221,19 @@ function data() {
           document.getElementById("profpicbg").style.backgroundSize = "cover";
           $("#phone").append(object.get('phone'));
           $("#email").append(object.get('email'));
-          $("#address").append(object.get('street') + ", " + object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
-          $("#featurestext").append(object.get('classes'));
+          $("#address").append(object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
+          $("#featurestext").append(object.get('classes')+"<br>");
           $(".infodiv").append("");
           $("#education").append(object.get('education'));
-          initialize(object.get('street') + ", " + object.get('city') + ", " + object.get('state') + ", " + object.get('zip'), user.get('street') + ", " + user.get('city') + ", " + user.get('state') + ", " + user.get('zip'))
+          people = object.get('zip');
+          users = user.get('zip');
+          n = object.id;
         }
       }
+      console.log(people);
+      console.log(users);
+      console.log(n);
+      distance(people, users, n);
     },
     error: function (error) {
       console.log("Error: " + error.code + " " + error.message);
@@ -320,24 +336,36 @@ function editbio()
   user.set("classes",bio);
 }
 
-function locate()
-{
-  var origin2 = "28105";
-  var destinationA = "28270";
-  var service = new google.maps.DistanceMatrixService();
-  service.getDistanceMatrix(
-    {
-    origins: [origin2],
-    destinations: [destinationA],
-    travelMode: google.maps.TravelMode.DRIVING,
-    transitOptions: TransitOptions,
-    unitSystem: UnitSystem,
-    durationInTraffic: Boolean,
-    avoidHighways: Boolean,
-    avoidTolls: Boolean,
-  }, callback);
-}
-
 function callback(response, status) {
   alert('swag')
+}
+
+function distance(people, users, n)
+{
+  var service = new google.maps.DistanceMatrixService();
+  return service.getDistanceMatrix(
+  {
+    origins: [people],
+    destinations: [users],
+    travelMode: google.maps.TravelMode.DRIVING,
+    unitSystem: google.maps.UnitSystem.IMPERIAL,
+    avoidHighways: false,
+    avoidTolls: false
+  }, 
+  function (response, status) {
+    if (status != google.maps.DistanceMatrixStatus.OK) {
+      console.log('Error was: ' + status);
+    } else {
+      var origins = response.originAddresses;
+      var destinations = response.destinationAddresses;
+      var outputDiv = document.getElementById('outputDiv');
+      outputDiv.innerHTML = '';
+      for (var a = 0; a < origins.length; a++) {
+        var responses = response.rows[a].elements;
+        for (var j = 0; j < responses.length; j++) {
+          document.getElementById(n).innerHTML = responses[j].distance.text+" away";
+        }
+      }
+    }
+  });
 }
