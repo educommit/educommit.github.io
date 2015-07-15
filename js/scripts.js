@@ -281,7 +281,6 @@ function signupmentee() {
         user.set("name", name);
         user.set("url", data.url);
         user.set("classes", classes);
-        user.set("street", street);
         user.set("city", city);
         user.set("state", state);
         user.set("zip", zip);
