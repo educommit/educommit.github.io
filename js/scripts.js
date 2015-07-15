@@ -134,7 +134,7 @@ function validate() {
 function userdata() {
   var user = Parse.User.current();
   $(".infodiv").append("<img src=\"" + user.get('url') + "\" height=\"200\" width=\"200\" style=\"border-radius:50%\">");
-  $("#nameofperson").append("" + user.get('name') + "");
+  $("#nameofperson").append("" + user.get('name') + " &middot; eduCommit");
   $(".infodiv").append("<h3>" + user.get('rating') + "/5 (" + user.get('numrating') + " ratings)");
   document.getElementById("profpicbg").style.background = "url(" + user.get('url') + ") no-repeat center center";
   document.getElementById("profpicbg").style.backgroundSize = "cover";
@@ -332,7 +332,7 @@ function editbio()
 {
   var bio = prompt("Please enter a new bio");
   var user = Parse.User.current();
-  user.set("classes",bio);
+  user.save("classes",bio);
 }
 
 function callback(response, status) {
