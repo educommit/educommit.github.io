@@ -44,6 +44,8 @@ function signup(url) {
 function signin() {
   var users = Parse.Object.extend("_User");
   var query = new Parse.Query(users);
+  query.ascending("name");
+  query.limit(5);
   query.find({
     success: function (results) {
       // Do something with the returned Parse.Object values
