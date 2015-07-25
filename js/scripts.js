@@ -314,13 +314,13 @@ function mentormentee() {
   if (user.get('Mentor')) {
     $("#nav").append('<a href="#mentorlist" class="mentorormentee mdl-layout__tab">Mentees</a>');
     $("#nav").append('<a class="mdl-layout__tab" onclick="logout()">Log Out</a>');
-    $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link">Mentees</a>');
+    $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link" id="listem" onclick="listem()">Mentees</a>');
     $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link" onclick="logout()">Log Out</a>');
   }
   else {
     $("#nav").append('<a href="#mentorlist" class="mentorormentee mdl-layout__tab">Mentors</a>');
     $("#nav").append('<a class="mdl-layout__tab" onclick="logout()">Log Out</a>');
-    $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link mentorormentee">Mentors</a>');
+    $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link mentorormentee" id="listem" onclick="listem()">Mentors</a>');
     $("#nav1").append('<a href="#mentorlist" class="mdl-navigation__link" onclick="logout()">Log Out</a>');
   }
 }
@@ -369,4 +369,16 @@ function distance(people, users, n)
       }
     }
   });
+}
+
+function listem()
+{
+  $("#mentorlist").addClass("is-active");
+  $("#overview").removeClass("is-active");
+}
+
+function gohome()
+{
+  $("#overview").addClass("is-active");
+  $("#mentorlist").removeClass("is-active");
 }
