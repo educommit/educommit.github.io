@@ -379,6 +379,5 @@ function listem()
 
 function gohome()
 {
-  $("#overview").addClass("is-active");
-  $("#mentorlist").removeClass("is-active");
+  
 }
