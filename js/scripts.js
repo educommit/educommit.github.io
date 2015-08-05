@@ -423,6 +423,9 @@ function displayChatMessage(name, text, recipient) {
   {
     $("#messagesDiv").append("<div class='blue' align='left'>"+text+"</div><br>")
   } 
-  
+  else
+  {
+    $("#messagesDiv").append("div class='grey' align='right'>"+text+"</div><br>")
+  }
   $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
 };
