@@ -62,7 +62,7 @@ function signin() {
       alert("Error: " + error.code + " " + error.message);
     }
   });
-  
+
   Parse.User.logIn($("#login-username").val().trim(), $("#login-password").val().trim(), {
     success: function (user) {
       window.location = "testhome.html";
@@ -157,7 +157,7 @@ function userdata() {
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get('Mentor') != user.get('Mentor')) {
-          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="'+i+'"></span> in '+object.get('city')+', '+object.get('state')+'</p></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
+          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="' + i + '"></span> in ' + object.get('city') + ', ' + object.get('state') + '</p><a href="firebase.html#' + object.id + '"><p>Start Chat</p></a></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
           people = object.get('zip');
           users = user.get('zip');
           console.log(distance(people, users, i));
@@ -224,7 +224,7 @@ function data() {
           $("#phone").append(object.get('phone'));
           $("#email").append(object.get('email'));
           $("#address").append(object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
-          $("#featurestext").append(object.get('classes')+"<br>");
+          $("#featurestext").append(object.get('classes') + "<br>");
           $(".infodiv").append("");
           $("#education").append(object.get('education'));
           people = object.get('zip');
@@ -325,60 +325,104 @@ function mentormentee() {
   }
 }
 
-function editpic()
-{
+function editpic() {
 
 }
 
-function editbio()
-{
+function editbio() {
   var bio = prompt("Please enter a new bio");
   var user = Parse.User.current();
-  user.save("classes",bio);
+  user.save("classes", bio);
 }
 
 function callback(response, status) {
   alert('swag')
 }
 
-function distance(people, users, n)
-{
+function distance(people, users, n) {
   var service = new google.maps.DistanceMatrixService();
   return service.getDistanceMatrix(
-  {
-    origins: [people],
-    destinations: [users],
-    travelMode: google.maps.TravelMode.DRIVING,
-    unitSystem: google.maps.UnitSystem.IMPERIAL,
-    avoidHighways: false,
-    avoidTolls: false
-  }, 
-  function (response, status) {
-    if (status != google.maps.DistanceMatrixStatus.OK) {
-      console.log('Error was: ' + status);
-    } else {
-      var origins = response.originAddresses;
-      var destinations = response.destinationAddresses;
-      var outputDiv = document.getElementById('outputDiv');
-      outputDiv.innerHTML = '';
-      for (var a = 0; a < origins.length; a++) {
-        var responses = response.rows[a].elements;
-        for (var j = 0; j < responses.length; j++) {
-          document.getElementById(n).innerHTML = responses[j].distance.text+" away";
+    {
+      origins: [people],
+      destinations: [users],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+      avoidHighways: false,
+      avoidTolls: false
+    },
+    function (response, status) {
+      if (status != google.maps.DistanceMatrixStatus.OK) {
+        console.log('Error was: ' + status);
+      } else {
+        var origins = response.originAddresses;
+        var destinations = response.destinationAddresses;
+        var outputDiv = document.getElementById('outputDiv');
+        outputDiv.innerHTML = '';
+        for (var a = 0; a < origins.length; a++) {
+          var responses = response.rows[a].elements;
+          for (var j = 0; j < responses.length; j++) {
+            document.getElementById(n).innerHTML = responses[j].distance.text + " away";
+          }
         }
       }
-    }
-  });
+    });
 }
 
-function listem()
-{
+function listem() {
   $("#mentorlist").addClass("is-active");
   $("#overview").removeClass("is-active");
 }
 
-function gohome()
-{
+function gohome() {
   $("#overview").addClass("is-active");
   $("#mentorlist").removeClass("is-active");
 }
+
+var user = Parse.User.current();
+var enduser = window.location.hash.substr(1);
+var myDataRef = new Firebase('https://m3ruefxyhbu.firebaseio-demo.com/');
+
+myDataRef.on('child_added', function (snapshot) {
+  var message = snapshot.val();
+  if ((message.email == user.id && message.name == enduser) || (message.name == user.id && message.email == enduser)) {
+    if (message.name == user.id) {
+      displayChatMessage("You", message.text, message.email);
+    }
+    else {
+      var UserInfo = Parse.Object.extend("_User");
+      var query = new Parse.Query(UserInfo);
+      query.get(window.location.hash.substr(1), {
+        success: function (object) {
+          recname = object.get('name');
+          displayChatMessage(recname, message.text, message.email);
+        },
+        error: function (object, error) {
+          alert("Sorry, something went wrong")
+        }
+      });
+    }
+  }
+});
+
+var UserInfo = Parse.Object.extend("_User");
+var query = new Parse.Query(UserInfo);
+query.get(window.location.hash.substr(1), {
+  success: function(object) {
+    name = object.get('name');
+    $("#chattingwith").append("Chatting with "+name)
+  },  
+  error: function(object, error)
+  {
+    alert("sorry, something went wrong");
+  }
+})
+
+function displayChatMessage(name, text, recipient) {
+  var user = Parse.User.current;
+  if(name == "You")
+  {
+    $("#messagesDiv").append("<div class='blue' align='left'>"+text+"</div><br>")
+  } 
+  
+  $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+};
