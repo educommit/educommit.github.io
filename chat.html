@@ -1,57 +1,157 @@
-<!doctype html>
-<!-- Material Design Lite Copyright 2015 Google Inc. All rights reserved. Licensed under the Apache License, Version 2.0
-(the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-https://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed
-under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and limitations under the License -->
-<html lang="en">
-  
-  <head>
+<html>
+<head>
+  <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
     <script type="text/javascript" src="js/jQuery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/ripple.js"></script>
     <script type="text/javascript" src="js/WOW.js"></script>
-    <script type="text/javascript" src="js/scripts.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-blue.min.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="shortcut icon" href="img/commit.png">
+    <link href="css/m-styles.min.css" rel="stylesheet">
     <script type="text/javascript">
       new WOW().init();
     </script>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="initial-scale=1">
     <title>EDUCommit &middot; Your Home</title>
-    <style>
-      #view-source {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones
+    -->
+    <!-- <link rel="canonical" href="http://www.example.com/">
+    -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="material.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+  <link rel="stylesheet" type="text/css" href="css/swag.css">
+</head>
+<body>
+<div class="l-demo-container">
+  <canvas id="drawing-canvas" width="480" height="420"></canvas>
+</div>
+<div id="colorholder"></div>
+<script>
+var user = Parse.User.current();
+  $(document).ready(function () {
+    //Set up some globals
+    var pixSize = 4, lastPoint = null, currentColor = "000", mouseDown = 0;
+
+    //Create a reference to the pixel data for our drawing.
+    var pixelDataRef = new Firebase('https://whiteboardedu.firebaseIO.com/');
+
+    // Set up our canvas
+    var myCanvas = document.getElementById('drawing-canvas');
+    var myContext = myCanvas.getContext ? myCanvas.getContext('2d') : null;
+    if (myContext == null) {
+      alert("You must use a browser that supports HTML5 Canvas to run this demo.");
+      return;
+    }
+
+    //Setup each color palette & add it to the screen
+    var colors = ["fff","000","f00","0f0","00f","88f","f8d","f88","f05","f80","0f8","cf0","08f","408","ff8","8ff"];
+    for (c in colors) {
+      var item = $('<div/>').css("background-color", '#' + colors[c]).addClass("colorbox");
+      item.click((function () {
+        var col = colors[c];
+        return function () {
+          currentColor = col;
+        };
+      })());
+      item.appendTo('#colorholder');
+    }
+
+    //Keep track of if the mouse is up or down
+    myCanvas.onmousedown = function () {mouseDown = 1;};
+    myCanvas.onmouseout = myCanvas.onmouseup = function () {
+      mouseDown = 0; lastPoint = null;
+    };
+
+    //Draw a line from the mouse's last position to its current position
+    var drawLineOnMouseMove = function(e) {
+      if (!mouseDown) return;
+
+      e.preventDefault();
+
+      // Bresenham's line algorithm. We use this to ensure smooth lines are drawn
+      var offset = $('canvas').offset();
+      var x1 = Math.floor((e.pageX - offset.left) / pixSize - 1),
+        y1 = Math.floor((e.pageY - offset.top) / pixSize - 1);
+      var x0 = (lastPoint == null) ? x1 : lastPoint[0];
+      var y0 = (lastPoint == null) ? y1 : lastPoint[1];
+      var dx = Math.abs(x1 - x0), dy = Math.abs(y1 - y0);
+      var sx = (x0 < x1) ? 1 : -1, sy = (y0 < y1) ? 1 : -1, err = dx - dy;
+      while (true) {
+        //write the pixel into Firebase, or if we are drawing white, remove the pixel
+        var coor = x0 + " " + y0;
+        if(currentColor == "fff")
+        {
+          pixelDataRef.set({coors : x0 + " " + y0, coor : null, sender: user.id, recipient : window.location.hash.substr(1)});
+        }
+        else
+        {
+          pixelDataRef.push({coors : x0 + " " + y0, coor : currentColor, sender: user.id, recipient : window.location.hash.substr(1)});
+        }
+        if (x0 == x1 && y0 == y1) break;
+        var e2 = 2 * err;
+        if (e2 > -dy) {
+          err = err - dy;
+          x0 = x0 + sx;
+        }
+        if (e2 < dx) {
+          err = err + dx;
+          y0 = y0 + sy;
+        }
       }
- div {
-    border-radius: 10px;
-    width: 70%;
-    padding: 10px;
-    margin: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-.grey {
-    float: left;
-    background: #E5E4EA;
-}
-.blue {
-    float: right;
-    background: #0E85FE;
-    border: 1px solid #0A88FC;
-    color: #fff;
-}
-    </style>
-  </head>
-  <body>
-	  <center><div id="messagesDiv">
-      <div class="grey">These are grey messages</div>
-      <div class="blue">These are blue messages</div>
-      <div class="blue">They are easy to implement</div>
-	  </div></center>
-  </body>
+      lastPoint = [x1, y1];
+    };
+    $(myCanvas).mousemove(drawLineOnMouseMove);
+    $(myCanvas).mousedown(drawLineOnMouseMove);
+
+    // Add callbacks that are fired any time the pixel data changes and adjusts the canvas appropriately.
+    // Note that child_added events will be fired for initial pixel data as well.
+    var drawPixel = function(snapshot) {
+      var user = Parse.User.current();
+      console.log(user.id);
+      var coords = snapshot.val();
+      if((window.location.hash.substr(1) == coords.recipient && user.id == coords.sender) || (window.location.hash.substr(1) == coords.sender && user.id == coords.recipient)) 
+      {
+        myContext.fillStyle = "#" + coords.coor;
+        var coors = coords.coors.split(" ");
+        var x = parseInt(coors[0]);
+        var y = parseInt(coors[1]);
+        myContext.fillRect(x * pixSize, y * pixSize, pixSize, pixSize);
+      }
+    };
+    var clearPixel = function(snapshot) {
+      var coords = snapshot.val();
+      myContext.clearRect(coords.coors[0] * pixSize, coords.coors[1] * pixSize, pixSize, pixSize);
+    };
+    pixelDataRef.on('child_added', drawPixel);
+    pixelDataRef.on('child_changed', drawPixel);
+    pixelDataRef.on('child_removed', clearPixel);
+  });
+</script>
+</body>
 </html>

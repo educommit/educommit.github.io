@@ -157,7 +157,7 @@ function userdata() {
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         if (object.get('Mentor') != user.get('Mentor')) {
-          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="' + i + '"></span> in ' + object.get('city') + ', ' + object.get('state') + '</p><a href="firebase.html#' + object.id + '"><p>Start Chat</p></a></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
+          $("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="' + i + '"></span> in ' + object.get('city') + ', ' + object.get('state') + '</p><a href="interact.html#' + object.id + '"><p>Start Chat</p></a></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
           people = object.get('zip');
           users = user.get('zip');
           console.log(distance(people, users, i));
@@ -380,7 +380,7 @@ function gohome() {
 
 var user = Parse.User.current();
 var enduser = window.location.hash.substr(1);
-var myDataRef = new Firebase('https://m3ruefxyhbu.firebaseio-demo.com/');
+var myDataRef = new Firebase('https://educommit.firebaseIO.com/');
 
 myDataRef.on('child_added', function (snapshot) {
   var message = snapshot.val();
