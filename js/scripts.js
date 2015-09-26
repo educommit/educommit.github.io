@@ -419,7 +419,7 @@ query.get(window.location.hash.substr(1), {
 
 function displayChatMessage(name, text, recipient) {
   var user = Parse.User.current;
-  if(name == "You")
+  if(name == "You" && recipient == window.location.hash.substr(1))
   {
     $("#messagesDiv").append("<div class='blue' align='left'>"+text+"</div><br>")
   } 
