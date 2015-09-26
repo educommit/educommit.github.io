@@ -423,9 +423,19 @@ function displayChatMessage(name, text, recipient) {
   {
     $("#messagesDiv").append("<div class='blue' align='left'>"+text+"</div><br>")
   } 
-  else
+  else if(name == enduser && recipient == user.id)
   {
     $("#messagesDiv").append("<div class='grey' align='right'>"+text+"</div><br>")
   }
   $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
 };
+
+$('#messageInput').keypress(function (e) {
+  if (e.keyCode == 13) {
+    var name = user.id;
+    var recipient = enduser;
+    var text = $('#messageInput').val();
+    myDataRef.push({ name: name, text: text, email: recipient });
+    $('#messageInput').val('');
+  }
+});

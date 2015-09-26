@@ -93,15 +93,7 @@
       </div>
     </center>
     <script>
-      $('#messageInput').keypress(function (e) {
-  if (e.keyCode == 13) {
-    var name = user.id;
-    var recipient = enduser;
-    var text = $('#messageInput').val();
-    myDataRef.push({ name: name, text: text, email: recipient });
-    $('#messageInput').val('');
-  }
-});
+      
     </script>
   </body>
 
