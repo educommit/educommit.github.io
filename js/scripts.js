@@ -436,6 +436,6 @@ $('#messageInput').keypress(function (e) {
     var recipient = enduser;
     var text = $('#messageInput').val();
     myDataRef.push({ name: name, text: text, email: recipient });
-    $('#messageInput').val('');
+    alert(enduser)
   }
 });
