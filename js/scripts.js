@@ -127,9 +127,6 @@ function validate() {
 	if (!user) {
 		window.location = "index.html";
 	}
-	else {
-		userdata();
-	}
 }
 
 function userdata() {
@@ -425,8 +422,10 @@ function usersearch()
 		success: function (results) {
 	  		for (var i = 0; i < results.length; i++) {
 				var object = results[i];
-				if(contains(object.get('classes').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()) || contains(object.get('education').toLowerCase().trim(), $('#getusers').val().toLowerCase().trim()) || contains(object.get('name').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()) || contains(object.get('email').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()))
+				var a = $("#getusers").val().toLowerCase().trim()
+				if(object.get('name').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('education').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('classes').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1)
 				{
+					console.log(object.get('name'))
 					$("#"+object.id).show();
 				}
 			}
