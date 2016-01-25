@@ -53,6 +53,11 @@ $('#files').bind("change", function (e) {
   console.log('swag');
 });
 
+if(window.location.href.indexOf('testhome.html')>-1)
+{
+	userdata();
+}
+
 // This function is called when the user clicks on Upload to Parse. It will create the REST API request to upload this image to Parse.
 function signuporiginal() {
 	var pw = document.forms['signup']['password'].value;
@@ -129,17 +134,6 @@ function validate() {
 
 function userdata() {
 	var user = Parse.User.current();
-	$(".infodiv").append("<img src=\"" + user.get('url') + "\" height=\"200\" width=\"200\" style=\"border-radius:50%\">");
-	$("#nameofperson").append("" + user.get('name') + " &middot; eduCommit");
-	$(".infodiv").append("<h3>" + user.get('rating') + "/5 (" + user.get('numrating') + " ratings)");
-	document.getElementById("profpicbg").style.background = "url(" + user.get('url') + ") no-repeat center center";
-	document.getElementById("profpicbg").style.backgroundSize = "cover";
-	$("#phone").append(user.get('phone'));
-	$("#email").append(user.get('email'));
-	$("#address").append(user.get('city') + ", " + user.get('state'))
-	$("#featurestext").append(user.get('classes'));
-	$(".infodiv").append("");
-	$("#education").append(user.get('education'));
 	console.log(user.get('classes'));
 	var users = Parse.Object.extend('_User');
 	var query = new Parse.Query(users);
@@ -151,23 +145,27 @@ function userdata() {
 	  for (var i = 0; i < results.length; i++) {
 	  	var object = results[i];
 	  	if (object.get('Mentor') != user.get('Mentor')) {
-	  		$("#list").append('<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="aboutme"><header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color-text--white" id="profpicbg" style="background-image:url(' + object.get('url') + ');background-size:cover"></header><div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone"><div class="mdl-card__supporting-text"><h4 id="featureshead">' + object.get('name') + '</h4><p id="featurestext">' + object.get('classes') + '</p><strong><p><span id="' + i + '"></span> in ' + object.get('city') + ', ' + object.get('state') + '</p><a href="interact.html#' + object.id + '"><p>Start Chat</p></a></strong></div></div><div class="mdl-card__actions"><a href="user.html#' + object.id + '" class="mdl-button">View more details</a></div></section>');
-	  		people = object.get('zip');
-	  		users = user.get('zip');
-	  		console.log(distance(people, users, i));
-	  		distance(people, users, i);
+	  		$("#main").append('<article class="thumb"><a href="user.html#'+object.id+'"" class="image"><div style="background: url('+object.get('url')+');background-size:cover;background-position:center;height:100%;width:100%;z-index:999"></div></a><h2 style="background:rgba(192,192,192,0.9)">'+object.get('name')+'</h2><p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p></article>');
 	  	}
 	  }
 	},
 	error: function (error) {
 		alert("Error: " + error.code + " " + error.message);
 	}
-});
+	});
+	if(user.get('Mentor'))
+	{
+		$("#title").html('<a href="index.html"><strong>EduCommit &middot; Mentees</strong></a>')
+	}
+	else
+	{
+		$("#title").html('<a href="index.html"><strong>EduCommit &middot; Mentors</strong></a>')	
+	}
 }
 
 function logout() {
 	Parse.User.logOut();
-	window.location = "testhome.html";
+	window.location = "index.html";
 }
 
 function checkSubmitin(e) {
