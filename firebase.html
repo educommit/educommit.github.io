@@ -15,7 +15,6 @@
     <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" href="img/commit.png">
-    <script type="text/javascript" src="js/scripts.js"></script>
     <link href="css/m-styles.min.css" rel="stylesheet">
     <script type="text/javascript">
       new WOW().init();
@@ -84,16 +83,63 @@
       </div>
     </center>
     <center>
-      <div id="messagesDiv"></div>
-    </center>
-    <center>
       <div class="form-group">
         <label for="exampleInputEmail1">Your Message</label>
         <input type="text" class="form-control" id="messageInput" placeholder="Message" style="width:100%;position:relative">
       </div>
     </center>
+    <center>
+      <div id="messagesDiv"></div>
+    </center>
     <script>
-      
+      var user = Parse.User.current();
+      var myDataRef = new Firebase('https://educommit.firebaseIO.com/');
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var text = $('#messageInput').val();
+          myDataRef.push({sender: user.id, recipient: window.location.hash.substr(1), text: text});
+          $('#messageInput').val('');
+        }
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        if((message.sender == user.id && message.recipient == window.location.hash.substr(1)) || (message.recipient == user.id && message.sender == window.location.hash.substr(1))) displayChatMessage(message.sender, message.text);
+      });
+      function displayChatMessage(name, text) {
+        var username = "";
+        if(name == user.id)
+        {
+            username = user.get('name')
+        }
+        else
+        {
+            var GameScore = Parse.Object.extend("_User");
+            var query = new Parse.Query(GameScore);
+            query.get(name, {
+              success: function(gameScore) {
+                username = gameScore.get('name')
+              },
+              error: function(object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and message.
+              }
+            });
+        }
+        $('<div/>').text(text).prepend($('<em/>').text(username+': ')).prependTo($('#messagesDiv'));
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+      var UserInfo = Parse.Object.extend("_User");
+var query = new Parse.Query(UserInfo);
+query.get(window.location.hash.substr(1), {
+    success: function(object) {
+        name = object.get('name');
+        $("#chattingwith").append("Chatting with "+name)
+    },  
+    error: function(object, error)
+    {
+        location.reload();
+    }
+})
     </script>
   </body>
 

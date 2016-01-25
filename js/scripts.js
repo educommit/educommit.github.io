@@ -210,21 +210,15 @@ function data() {
 			$(".infodiv").append("<h3>" + object.get('rating') + "/5 (" + object.get('numrating') + " ratings)");
 			document.getElementById("profpicbg").style.background = "url(" + object.get('url') + ") no-repeat center center";
 			document.getElementById("profpicbg").style.backgroundSize = "cover";
-			$("#phone").append(object.get('phone'));
 			$("#email").append(object.get('email'));
-			$("#address").append(object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
 			$("#featurestext").append(object.get('classes') + "<br>");
 			$(".infodiv").append("");
 			$("#education").append(object.get('education'));
-			people = object.get('zip');
-			users = user.get('zip');
 			n = object.id;
+			document.getElementById('startchat').href = 'interact.html#'+object.id
 		}
 	  }
-	  console.log(people);
-	  console.log(users);
-	  console.log(n);
-	  distance(people, users, n);
+		
 	},
 	error: function (error) {
 		console.log("Error: " + error.code + " " + error.message);
@@ -373,7 +367,7 @@ query.get(window.location.hash.substr(1), {
 	},  
 	error: function(object, error)
 	{
-		alert("sorry, something went wrong");
+		location.reload();
 	}
 })
 
