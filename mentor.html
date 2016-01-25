@@ -260,7 +260,7 @@ footer img:focus , footer a:focus { outline: none; }
       </div>
       <div class='login'>
         <h2>Login To Your Account</h2>
-        <div class="form-inline" role="form" method="get" onKeyPress="checkSubmitin(event)">
+        <div class="form-inline" role="form" name="login" method="get" onKeyPress="checkSubmitin(event)" onsubmit="signin()">
           <!-- originally a <form>; caused parse login to fail -->
           <div class="group">
             <input type="email" class="form-control" id="login-username"><span class="highlight"></span><span class="bar"></span>

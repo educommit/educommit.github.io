@@ -42,12 +42,13 @@
 						<p class="fieldset">
 							<label class="image-replace cd-email" for="signin-email">E-mail</label>
 							<input class="full-width has-padding has-border" id="login-email" type="email" name="email" placeholder="E-mail">
-							<span class="cd-error-message" id="error">Something went wrong. Please check your credentials :(</span>
+							<span class="cd-error-message">Error with your email :(</span>
 						</p>
 						<p class="fieldset">
 							<label class="image-replace cd-password" for="signin-password">Password</label>
 							<input class="full-width has-padding has-border" id="login-password" type="password" name="password" placeholder="Password">
 							<a href="#0" class="hide-password">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<input type="checkbox" id="remember-me" checked>
@@ -60,7 +61,7 @@
 					<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
 					<!-- <a href="#0" class="cd-close-form">Close</a> -->
 				</div> <!-- cd-login -->
-				<div id="cd-signup"> <!-- sign up form -->
+y				<div id="cd-signup"> <!-- sign up form -->
 					<form class="cd-form" name="signup" onsubmit="return false; signuporiginal()">
 						<div class="group">
 						  <p class="help-block">Choose Profile Picture</p>
@@ -71,33 +72,37 @@
 						<input class="half-width has-padding has-border" id="signup-username" type="text" name="LName" placeholder="Last Name">
 						<p class="fieldset">
 							<label class="image-replace cd-email" for="signup-email">E-mail</label>
-							<input class="full-width has-padding has-border" id="login-email" type="email" name="email" placeholder="E-mail">
+							<input class="full-width has-padding has-border" id="signup-email" type="email" name="email" placeholder="E-mail">
 							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<label class="image-replace cd-password" for="signup-password">Password</label>
 							<input class="full-width has-padding has-border" id="signup-password" type="text" name="password" placeholder="Password">
 							<a href="#0" class="hide-password">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<label class="image-replace cd-password" for="signup-password">Confirm Password</label>
-							<input class="full-width has-padding has-border" id="signup-passwordc" type="text" name="password-confirm" placeholder="Confirm Password">
+							<input class="full-width has-padding has-border" id="signup-password" type="text" name="password-confirm" placeholder="Confirm Password">
 							<a href="#0" class="hide-password">Hide</a>
+							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<label class="image-replace cd-email" for="signup-email">Bio</label>
 							<input class="full-width has-padding has-border" id="signup-email" type="text" name="bio" placeholder="Short Bio">
+							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<label class="image-replace cd-email" for="signup-email">Education</label>
 							<input class="full-width has-padding has-border" id="signup-email" type="text" name="education" placeholder="Education">
+							<span class="cd-error-message">Error message here!</span>
 						</p>
 						<p class="fieldset">
 							<input type="checkbox" id="accept-terms" name="mentor" value="mentor">
 							<label for="accept-terms">I am signing up as a <strong>mentor</strong></label>
 						</p>
 						<p class="fieldset">
-							<input class="full-width has-padding" type="submit" value="Create account" onclick="signuporiginal();">
+							<input class="full-width has-padding" type="submit" value="Create account" onclick="return false; signuporiginal();">
 						</p>
 					</form>
 					<!-- <a href="#0" class="cd-close-form">Close</a> -->
