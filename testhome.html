@@ -24,6 +24,7 @@
 						<h1 id="title"><a href="index.html"><strong>Multiverse</strong> by HTML5 UP</a></h1>
 						<nav>
 							<ul>
+                <li><a href="#footer" onclick="logout()">Search: </a></li><li><input type="text" id="getusers"></li>
 								<li><a href="#footer" class="icon fa-info-circle" onclick="logout()">Log Out</a></li>
 							</ul>
 						</nav>
@@ -95,7 +96,17 @@
         $('.thumb').hover(function(){
           alert('test')
         });
-        if(!Parse.User.current()) window.location = "index.html"
+        if(!Parse.User.current()) window.location = "index.html";
+        $("#getusers").keyup(function(e) {
+          if(e.keyCode == 8) {
+            $(".thumb").show();
+          }
+          else
+          {
+            $(".thumb").hide();
+            usersearch();
+          }
+        });
       </script>
 	</body>
 </html>

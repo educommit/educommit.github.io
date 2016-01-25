@@ -8,27 +8,27 @@ function signin() {
 		  // Do something with the returned Parse.Object values
 		  a = true;
 		  for (var i = 0; i < results.length; i++) {
-		  	var object = results[i];
-		  	if (object.get('email') == document.forms['login']['email'].value.trim() && object.get('emailVerified') == false) {
-		  		$('.cd-user-modal').find('#cd-login').find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible')
-		  		$("#error").html('Please confirm your email before proceeding');
-		  		a = false;
-		  		break;
-		  	}
+			var object = results[i];
+			if (object.get('email') == document.forms['login']['email'].value.trim() && object.get('emailVerified') == false) {
+				$('.cd-user-modal').find('#cd-login').find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible')
+				$("#error").html('Please confirm your email before proceeding');
+				a = false;
+				break;
+			}
 		  }
 		  if(a)
 		  {
-		  	Parse.User.logIn(document.forms['login']['email'].value.trim(), document.forms['login']['password'].value.trim(), {
-		  		success: function (user) {
-		  			window.location = "testhome.html";
-		  		},
-		  		error: function (user, error) {
-		  			if (error.code == "101" || error.code == 101) {
-		  				$('.cd-user-modal').find('#cd-login').find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible')
-		  				$("#error").html('Something went wrong; Please check your credentials');
-		  			}
-		  		}
-		  	});
+			Parse.User.logIn(document.forms['login']['email'].value.trim(), document.forms['login']['password'].value.trim(), {
+				success: function (user) {
+					window.location = "testhome.html";
+				},
+				error: function (user, error) {
+					if (error.code == "101" || error.code == 101) {
+						$('.cd-user-modal').find('#cd-login').find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible')
+						$("#error").html('Something went wrong; Please check your credentials');
+					}
+				}
+			});
 		  }
 	},
 	error: function (error) {
@@ -143,10 +143,10 @@ function userdata() {
 	  var people = [];
 	  var users = [];
 	  for (var i = 0; i < results.length; i++) {
-	  	var object = results[i];
-	  	if (object.get('Mentor') != user.get('Mentor')) {
-	  		$("#main").append('<article class="thumb"><a href="user.html#'+object.id+'"" class="image"><div style="background: url('+object.get('url')+');background-size:cover;background-position:center;height:100%;width:100%;z-index:999"></div></a><h2 style="background:rgba(192,192,192,0.9)">'+object.get('name')+'</h2><p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p></article>');
-	  	}
+		var object = results[i];
+		if (object.get('Mentor') != user.get('Mentor')) {
+			$("#main").append('<article class="thumb" id="'+object.id+'"><a href="user.html#'+object.id+'"" class="image"><div style="background: url('+object.get('url')+');background-size:cover;background-position:center;height:100%;width:100%;z-index:999"></div></a><h2 style="background:rgba(192,192,192,0.9)">'+object.get('name')+'</h2><p>Nunc blandit nisi ligula magna sodales lectus elementum non. Integer id venenatis velit.</p></article>');
+		}
 	  }
 	},
 	error: function (error) {
@@ -206,23 +206,23 @@ function data() {
 	  var users;
 	  var n;
 	  for (var i = 0; i < results.length; i++) {
-	  	var object = results[i];
-	  	if (object.id == id) {
-	  		$(".infodiv").append("<img src=\"" + object.get('url') + "\" height=\"200\" width=\"200\" style=\"border-radius:50%\">");
-	  		$("#nameofperson").append("" + object.get('name') + "");
-	  		$(".infodiv").append("<h3>" + object.get('rating') + "/5 (" + object.get('numrating') + " ratings)");
-	  		document.getElementById("profpicbg").style.background = "url(" + object.get('url') + ") no-repeat center center";
-	  		document.getElementById("profpicbg").style.backgroundSize = "cover";
-	  		$("#phone").append(object.get('phone'));
-	  		$("#email").append(object.get('email'));
-	  		$("#address").append(object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
-	  		$("#featurestext").append(object.get('classes') + "<br>");
-	  		$(".infodiv").append("");
-	  		$("#education").append(object.get('education'));
-	  		people = object.get('zip');
-	  		users = user.get('zip');
-	  		n = object.id;
-	  	}
+		var object = results[i];
+		if (object.id == id) {
+			$(".infodiv").append("<img src=\"" + object.get('url') + "\" height=\"200\" width=\"200\" style=\"border-radius:50%\">");
+			$("#nameofperson").append("" + object.get('name') + "");
+			$(".infodiv").append("<h3>" + object.get('rating') + "/5 (" + object.get('numrating') + " ratings)");
+			document.getElementById("profpicbg").style.background = "url(" + object.get('url') + ") no-repeat center center";
+			document.getElementById("profpicbg").style.backgroundSize = "cover";
+			$("#phone").append(object.get('phone'));
+			$("#email").append(object.get('email'));
+			$("#address").append(object.get('city') + ", " + object.get('state') + ", " + object.get('zip'))
+			$("#featurestext").append(object.get('classes') + "<br>");
+			$(".infodiv").append("");
+			$("#education").append(object.get('education'));
+			people = object.get('zip');
+			users = user.get('zip');
+			n = object.id;
+		}
 	  }
 	  console.log(people);
 	  console.log(users);
@@ -331,35 +331,6 @@ function callback(response, status) {
 	alert('swag')
 }
 
-function distance(people, users, n) {
-	var service = new google.maps.DistanceMatrixService();
-	return service.getDistanceMatrix(
-	{
-		origins: [people],
-		destinations: [users],
-		travelMode: google.maps.TravelMode.DRIVING,
-		unitSystem: google.maps.UnitSystem.IMPERIAL,
-		avoidHighways: false,
-		avoidTolls: false
-	},
-	function (response, status) {
-		if (status != google.maps.DistanceMatrixStatus.OK) {
-			console.log('Error was: ' + status);
-		} else {
-			var origins = response.originAddresses;
-			var destinations = response.destinationAddresses;
-			var outputDiv = document.getElementById('outputDiv');
-			outputDiv.innerHTML = '';
-			for (var a = 0; a < origins.length; a++) {
-				var responses = response.rows[a].elements;
-				for (var j = 0; j < responses.length; j++) {
-					document.getElementById(n).innerHTML = responses[j].distance.text + " away";
-				}
-			}
-		}
-	});
-}
-
 function listem() {
 	$("#mentorlist").addClass("is-active");
 	$("#overview").removeClass("is-active");
@@ -431,3 +402,42 @@ $('#messageInput').keypress(function (e) {
 		alert(enduser)
 	}
 });
+
+function contains(parent, child)
+{
+	if(parent.indexOf(child)>-1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function usersearch()
+{
+	var UserInfo = Parse.Object.extend("_User");
+	var query = new Parse.Query(UserInfo);
+	var user = Parse.User.current();
+	console.log($('#getusers').val());
+	query.find({
+		success: function (results) {
+	  		for (var i = 0; i < results.length; i++) {
+				var object = results[i];
+				if(contains(object.get('classes').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()) || contains(object.get('education').toLowerCase().trim(), $('#getusers').val().toLowerCase().trim()) || contains(object.get('name').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()) || contains(object.get('email').toLowerCase().trim(), $("#getusers").val().toLowerCase().trim()))
+				{
+					$("#"+object.id).show();
+				}
+			}
+	  	},
+		error: function (error) {
+			alert("Error: " + error.code + " " + error.message);
+		}
+	});
+}
+
+
+
+
+
