@@ -1,3 +1,4 @@
+Parse.initialize("Hx13dvXcISIEDbus38pp4Dbat8lyHdCJrrqTIvsy", "Ongx6JbW7fqVqPiAHML2NkBNX9Wx3DXqdEYdYoli");
 function signin() {
 	var users = Parse.Object.extend("_User");
 	var query = new Parse.Query(users);
@@ -36,6 +37,18 @@ function signin() {
 	}
 });
 }
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
 var file;
 
 function handleFileSelect(e) {
