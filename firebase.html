@@ -1,146 +1,142 @@
 <html>
-  
-  <head>
-    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-    <script src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
-    <script type="text/javascript" src="js/jQuery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/ripple.js"></script>
-    <script type="text/javascript" src="js/WOW.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
-    <link rel="stylesheet" type="text/css" href="css/animate.css">
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-blue.min.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="shortcut icon" href="img/commit.png">
-    <link href="css/m-styles.min.css" rel="stylesheet">
-    <script type="text/javascript">
-      new WOW().init();
-    </script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-    <meta name="viewport" content="initial-scale=1">
-    <title>EDUCommit &middot; Your Home</title>
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones
-    -->
-    <!-- <link rel="canonical" href="http://www.example.com/">
-    -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
-    rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="material.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-      #messageInput
-      {
-        width: 25%
-      }
-      #view-source {
-        position: fixed;
-        display: block;
-        right: 0;
-        bottom: 0;
-        margin-right: 40px;
-        margin-bottom: 40px;
-        z-index: 900;
-      }
-      div {
-    border-radius: 10px;
-    padding: 10px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-.grey {
-    background: #E5E4EA;
-}
-.blue {
-  width: auto;
-    background: #0E85FE;
-    border: 1px solid #0A88FC;
-    color: #fff;
-}
-    </style>
-  </head>
+	<head>
+		<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script><!-- Firebase database realtime files -->
+		<script src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script><!-- Parse database for user authentication -->
+		<script type="text/javascript" src="js/jQuery.min.js"></script><!-- jQuery for front-end interactions -->
+		<script type="text/javascript" src="js/bootstrap.min.js"></script><!-- Bootstrap.js for interaction with Bootstrap elements -->
+		<script type="text/javascript" src="js/ripple.js"></script><!-- Ripple.js for button click animations -->
+		<script type="text/javascript" src="js/WOW.js"></script><!-- WOW.js for animations and stuff -->
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!-- jQuery UI for more client-side interactions -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script><!-- Maps API for Geolocation Services -->
+		<link rel="stylesheet" type="text/css" href="css/animate.css"><!-- Animate.css for animations and stuff -->
+		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-blue.min.css"><!-- 
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="shortcut icon" href="img/commit.png">
+		<link href="css/m-styles.min.css" rel="stylesheet">
+		<script type="text/javascript">
+	  		new WOW().init();
+		</script>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+		<meta name="viewport" content="initial-scale=1">
+		<title>EDUCommit &middot; Your Home</title>
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="Material Design Lite">
+		<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+		<!-- Tile icon for Win8 (144x144 + tile color) -->
+		<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+		<meta name="msapplication-TileColor" content="#3372DF">
+		<!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones-->
+		<!-- <link rel="canonical" href="http://www.example.com/">-->
+		<link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="material.min.css">
+		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" href="css/style.css">
+		<style>
+	  		#messageInput
+	  		{
+				width: 25%
+	  		}
+	  		#view-source {
+				position: fixed;
+				display: block;
+				right: 0;
+				bottom: 0;
+				margin-right: 40px;
+				margin-bottom: 40px;
+				z-index: 900;
+	  		}
+	  		div {
+				border-radius: 10px;
+				padding: 10px;
+				font-family: Arial, Helvetica, sans-serif;
+			}
+			.grey {		
+				background: #E5E4EA;
+			}
+			.blue {
+  				width: auto;
+				background: #0E85FE;
+				border: 1px solid #0A88FC;
+				color: #fff;
+			}
+		</style>
+  	</head>
   
   <body>
-    <center>
-      <div class="heading">
-        <h2 id="chattingwith"></h2>
-      </div>
-    </center>
-    <center>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Your Message</label>
-        <input type="text" class="form-control" id="messageInput" placeholder="Message" style="width:100%;position:relative">
-      </div>
-    </center>
-    <center>
-      <div id="messagesDiv"></div>
-    </center>
-    <script>
-      var user = Parse.User.current();
-      var myDataRef = new Firebase('https://educommit.firebaseIO.com/');
-      $('#messageInput').keypress(function (e) {
-        if (e.keyCode == 13) {
-          var text = $('#messageInput').val();
-          myDataRef.push({sender: user.id, recipient: window.location.hash.substr(1), text: text});
-          $('#messageInput').val('');
-        }
-      });
-      myDataRef.on('child_added', function(snapshot) {
-        var message = snapshot.val();
-        if((message.sender == user.id && message.recipient == window.location.hash.substr(1)) || (message.recipient == user.id && message.sender == window.location.hash.substr(1))) displayChatMessage(message.sender, message.text);
-      });
-      function displayChatMessage(name, text) {
-        var username = "";
-        if(name == user.id)
-        {
-            username = user.get('name')
-        }
-        else
-        {
-            var GameScore = Parse.Object.extend("_User");
-            var query = new Parse.Query(GameScore);
-            query.get(name, {
-              success: function(gameScore) {
-                username = gameScore.get('name')
-              },
-              error: function(object, error) {
-                // The object was not retrieved successfully.
-                // error is a Parse.Error with an error code and message.
-              }
-            });
-        }
-        $('<div/>').text(text).prepend($('<em/>').text(username+': ')).prependTo($('#messagesDiv'));
-        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-      };
-      var UserInfo = Parse.Object.extend("_User");
+	<center>
+	  <div class="heading">
+		<h2 id="chattingwith"></h2>
+	  </div>
+	</center>
+	<center>
+	  <div class="form-group">
+		<label for="exampleInputEmail1">Your Message</label>
+		<input type="text" class="form-control" id="messageInput" placeholder="Message" style="width:100%;position:relative">
+	  </div>
+	</center>
+	<center>
+	  <div id="messagesDiv"></div>
+	</center>
+	<script>
+	  var user = Parse.User.current();
+	  var myDataRef = new Firebase('https://educommit.firebaseIO.com/');
+	  $('#messageInput').keypress(function (e) {
+		if (e.keyCode == 13) {
+		  var text = $('#messageInput').val();
+		  myDataRef.push({sender: user.id, recipient: window.location.hash.substr(1), text: text});
+		  $('#messageInput').val('');
+		}
+	  });
+	  myDataRef.on('child_added', function(snapshot) {
+		var message = snapshot.val();
+		if((message.sender == user.id && message.recipient == window.location.hash.substr(1)) || (message.recipient == user.id && message.sender == window.location.hash.substr(1))) displayChatMessage(message.sender, message.text);
+	  });
+	  function displayChatMessage(name, text) {
+		var username = "";
+		if(name == user.id)
+		{
+			username = user.get('name')
+		}
+		else
+		{
+			var GameScore = Parse.Object.extend("_User");
+			var query = new Parse.Query(GameScore);
+			query.get(name, {
+			  success: function(gameScore) {
+				username = gameScore.get('name')
+			  },
+			  error: function(object, error) {
+				// The object was not retrieved successfully.
+				// error is a Parse.Error with an error code and message.
+			  }
+			});
+		}
+		$('<div/>').text(text).prepend($('<em/>').text(username+': ')).prependTo($('#messagesDiv'));
+		$('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+	  };
+	  var UserInfo = Parse.Object.extend("_User");
 var query = new Parse.Query(UserInfo);
 query.get(window.location.hash.substr(1), {
-    success: function(object) {
-        name = object.get('name');
-        $("#chattingwith").append("Chatting with "+name)
-    },  
-    error: function(object, error)
-    {
-        location.reload();
-    }
+	success: function(object) {
+		name = object.get('name');
+		$("#chattingwith").append("Chatting with "+name)
+	},  
+	error: function(object, error)
+	{
+		location.reload();
+	}
 })
-    </script>
+	</script>
   </body>
 
 </html>
