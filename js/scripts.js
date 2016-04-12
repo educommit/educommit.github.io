@@ -223,6 +223,7 @@ function data() {
                     $(".infodiv").append("");
                     $("#education").append(object.get('education'));
                     $("#name").val(object.get('name'))
+                    $("#emailform").val(object.get('email'))
                     n = object.id;
                     document.getElementByClassName('startchat').href = 'interact.html#' + object.id
                 }

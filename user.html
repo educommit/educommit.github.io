@@ -7,10 +7,10 @@ See the License for the specific language governing permissions and limitations 
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/animate.css">
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-blue.min.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/animate.css"><!-- Include animate.css for animations and stuff on the files -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-blue.min.css"><!-- include Material Design CSS files -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"><!-- include font-awesome for icons and stuff -->
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script><!-- include material.js for Material Design JavaScript interactions -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script type="text/javascript" src="js/scripts.js"></script>
     <link href="css/m-styles.min.css" rel="stylesheet">
@@ -89,14 +89,6 @@ See the License for the specific language governing permissions and limitations 
                             <p id="featurestext"></p>
                         </div>
                     </div>
-                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn1">
-                        <i class="material-icons">more_vert</i>
-                    </button>
-                    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn1">
-                        <li class="mdl-menu__item">Lorem</li>
-                        <li class="mdl-menu__item" disabled>Ipsum</li>
-                        <li class="mdl-menu__item">Dolor</li>
-                    </ul>
                 </section>
                 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="details">
                     <div class="mdl-card mdl-cell mdl-cell--12-col">
@@ -112,14 +104,6 @@ See the License for the specific language governing permissions and limitations 
                             </div>
                         </div>
                     </div>
-                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn2">
-                        <i class="material-icons">more_vert</i>
-                    </button>
-                    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn2">
-                        <li class="mdl-menu__item">Lorem</li>
-                        <li class="mdl-menu__item" disabled>Ipsum</li>
-                        <li class="mdl-menu__item">Dolor</li>
-                    </ul>
                 </section>
                 <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="myeducation">
                     <div class="mdl-card mdl-cell mdl-cell--12-col">
@@ -127,7 +111,7 @@ See the License for the specific language governing permissions and limitations 
                             <h4>Pay Tutor ($30/hour)</h4>
                             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="pay">
                                 <input type="hidden" name="cmd" value="_xclick">
-                                <input type="hidden" name="business" value="akamath426@gmail.com">
+                                <input type="hidden" name="business" value="akamath426@gmail.com" id="emailform">
                                 <input type="hidden" name="lc" value="BT">
                                 <input type="hidden" name="item_name" value="" id="name">
                                 <input type="hidden" name="amount" value="1000.00" id="amount">
