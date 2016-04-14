@@ -224,6 +224,12 @@ function data() {
                     $("#education").append(object.get('education'));
                     $("#name").val(object.get('name'))
                     $("#emailform").val(object.get('email'))
+                    $("#subjectsyo").append(object.get('Subjects'))
+                    if(object.get('Mentor') == false)
+                    {
+                    	$("#myeducation").hide();
+                        $("#subjectstaught").hide();
+                    }
                     n = object.id;
                     document.getElementByClassName('startchat').href = 'interact.html#' + object.id
                 }
@@ -415,7 +421,7 @@ function usersearch() {
             for (var i = 0; i < results.length; i++) {
                 var object = results[i];
                 var a = $("#getusers").val().toLowerCase().trim()
-                if (object.get('name').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('education').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('classes').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1) {
+                if (object.get('name').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('education').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('classes').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1 || object.get('Subjects').toLowerCase().trim().indexOf(a.toLowerCase().trim()) > -1) {
                     console.log(object.get('name'))
                     $("#" + object.id).show();
                 }
