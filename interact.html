@@ -5,9 +5,11 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 		<script src="https://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 		<script type="text/javascript" src="js/jQuery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 		<style type="text/css">html,body{height:100%;width:100%;}.col-md-6{height:100%;}</style>
 	</head>
 	<body>
+		<h2><a href="#" id="link" style="color: #777"><i class="fa fa-arrow-left"></i> Go back home</a></h2>
 		<div class="row">
 			<div class="col-md-6">
 				<iframe src="chat.html" width="100%" height="100%" id="whiteboard" frameborder="0"></iframe>
@@ -16,7 +18,9 @@
 				<iframe src="firebase.html" width="100%" height="100%" id="chat" frameborder="0"></iframe>
 			</div>
 		</div>
-		<script type="text/javascript">var MyClass = Parse.Object.extend("_User");var query = new Parse.Query(MyClass);query.get(window.location.hash.substr(1), {success: function(object) {document.getElementById('chat').src="firebase.html#"+object.id;document.getElementById('whiteboard').src="chat.html#"+object.id;},error: function(object, error) {location.reload()}});
+		<script type="text/javascript">
+			var MyClass = Parse.Object.extend("_User");var query = new Parse.Query(MyClass);query.get(window.location.hash.substr(1), {success: function(object) {document.getElementById('chat').src="firebase.html#"+object.id;document.getElementById('whiteboard').src="chat.html#"+object.id;},error: function(object, error) {location.reload()}});
+			$("#link").attr('href', 'user.html#'+window.location.hash.substr(1))
  		</script>
 	</body>
 </html>
